@@ -1,0 +1,72 @@
+@font-face {
+  font-family: 'Aleo-Bold';
+  src: url('Aleo-Bold.eot'); /* IE9 Compat Modes */
+  src: url('Aleo-Bold.eot?#iefix') format('embedded-opentype'),
+       url('Aleo-Bold.woff') format('woff'),
+       url('Aleo-Bold.ttf')  format('truetype'),
+       url('Aleo-Bold.svg#cf3693393c8e71a04fe36f498577ada0') format('svg'); /* Legacy iOS */
+
+  font-style:   normal;
+  font-weight:  700;
+}
+
+@font-face {
+  font-family: 'Aleo-BoldItalic';
+  src: url('Aleo-BoldItalic.eot'); /* IE9 Compat Modes */
+  src: url('Aleo-BoldItalic.eot?#iefix') format('embedded-opentype'),
+       url('Aleo-BoldItalic.woff') format('woff'),
+       url('Aleo-BoldItalic.ttf')  format('truetype'),
+       url('Aleo-BoldItalic.svg#44dc3b0787a4d14530a8620028327e76') format('svg'); /* Legacy iOS */
+
+  font-style:   italic;
+  font-weight:  700;
+}
+
+@font-face {
+  font-family: 'Aleo-Italic';
+  src: url('Aleo-Italic.eot'); /* IE9 Compat Modes */
+  src: url('Aleo-Italic.eot?#iefix') format('embedded-opentype'),
+       url('Aleo-Italic.woff') format('woff'),
+       url('Aleo-Italic.ttf')  format('truetype'),
+       url('Aleo-Italic.svg#93d7f92b4aac06b01d92d1323352886c') format('svg'); /* Legacy iOS */
+
+  font-style:   italic;
+  font-weight:  400;
+}
+
+@font-face {
+  font-family: 'Aleo-Light';
+  src: url('Aleo-Light.eot'); /* IE9 Compat Modes */
+  src: url('Aleo-Light.eot?#iefix') format('embedded-opentype'),
+       url('Aleo-Light.woff') format('woff'),
+       url('Aleo-Light.ttf')  format('truetype'),
+       url('Aleo-Light.svg#0a615970e4ace30c6194a1d048e4285f') format('svg'); /* Legacy iOS */
+
+  font-style:   normal;
+  font-weight:  200;
+}
+
+@font-face {
+  font-family: 'Aleo-LightItalic';
+  src: url('Aleo-LightItalic.eot'); /* IE9 Compat Modes */
+  src: url('Aleo-LightItalic.eot?#iefix') format('embedded-opentype'),
+       url('Aleo-LightItalic.woff') format('woff'),
+       url('Aleo-LightItalic.ttf')  format('truetype'),
+       url('Aleo-LightItalic.svg#d0e5bdc4b7a544820b29b1f6ea635bfb') format('svg'); /* Legacy iOS */
+
+  font-style:   italic;
+  font-weight:  200;
+}
+
+@font-face {
+  font-family: 'Aleo-Regular';
+  src: url('Aleo-Regular.eot'); /* IE9 Compat Modes */
+  src: url('Aleo-Regular.eot?#iefix') format('embedded-opentype'),
+       url('Aleo-Regular.woff') format('woff'),
+       url('Aleo-Regular.ttf')  format('truetype'),
+       url('Aleo-Regular.svg#2a06578e352ec0eaf941819fd2998aaf') format('svg'); /* Legacy iOS */
+
+  font-style:   normal;
+  font-weight:  400;
+}
+
