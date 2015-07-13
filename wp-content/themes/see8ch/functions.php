@@ -6,6 +6,28 @@
  */
 
 
+// Control Visible Admin Menus
+function remove_menus(){
+  remove_menu_page( 'index.php' );                      //  Dashboard
+  remove_menu_page( 'edit.php' );                       //  Posts
+  remove_menu_page( 'upload.php' );                    //  Media
+  remove_menu_page( 'edit.php?post_type=page' );    //  Pages
+  remove_menu_page( 'edit-comments.php' );           //  Comments
+  remove_menu_page( 'themes.php' );                   //  Appearance
+  remove_menu_page( 'plugins.php' );                   //  Plugins
+  remove_menu_page( 'users.php' );                     //  Users
+  remove_menu_page( 'tools.php' );                     //  Tools
+  remove_menu_page( 'options-general.php' );         //  Settings
+}
+// add_action( 'admin_menu', 'remove_menus' );
+
+
+
+// ACF Options Page
+if( function_exists('acf_add_options_page') ) {
+  acf_add_options_page();
+}
+
 // jQuery
 if (!is_admin()) add_action("wp_enqueue_scripts", "my_jquery_enqueue", 11);
 function my_jquery_enqueue() {
@@ -114,14 +136,12 @@ function see8ch_scripts() {
 	wp_enqueue_style( 'see8ch-lato', 'http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' );
 	// wp_enqueue_style( 'see8ch-merriweather', 'http://fonts.googleapis.com/css?family=Merriweather:400,700,900,300,300italic,400italic,900italic,700italic' );
 	// wp_enqueue_style( 'see8ch-arvo', 'http://fonts.googleapis.com/css?family=Arvo:400,700,400italic,700italic' );
-	wp_enqueue_style( 'see8ch-aleo', get_template_directory_uri() . '/fonts/aleo/font.css' );
+	wp_enqueue_style( 'see8ch-aleo', get_template_directory_uri() . '/assets/fonts/aleo/font.css' );
+	// Genericons
+	wp_enqueue_style( 'see8ch-genericons', get_template_directory_uri() . '/assets/fonts/genericons/genericons.css' );
 
-	wp_enqueue_style( 'see8ch-genericons', get_template_directory_uri() . '/fonts/genericons/genericons.css' );
-
-	wp_enqueue_script( 'see8ch-navigation', get_template_directory_uri() . '/js/navigation.js', array(), '20120206', true );
-	wp_enqueue_script( 'see8ch-skip-link-focus-fix', get_template_directory_uri() . '/js/skip-link-focus-fix.js', array(), '20130115', true );
-
-	wp_enqueue_script( 'see8ch-minscripts', get_template_directory_uri() . '/js/scripts.min.js', array(), '20120206', true );
+	// Scripts
+	wp_enqueue_script( 'see8ch-scripts', get_template_directory_uri() . '/assets/js/scripts.min.js', array(), '20120206', true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -147,7 +167,7 @@ require get_template_directory() . '/inc/extras.php';
 /**
  * Customizer additions.
  */
-require get_template_directory() . '/inc/customizer.php';
+//require get_template_directory() . '/inc/customizer.php';
 
 /**
  * Load Jetpack compatibility file.

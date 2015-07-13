@@ -21,7 +21,7 @@ get_header(); ?>
 			<h3 class="section-header"><?php the_field('process_headline'); ?></h3>
 
 			<div class="tools-column">
-			<?php get_template_part('img/icons/icon', 'laptop.svg'); ?>
+			<?php get_template_part('assets/img/icons/icon', 'laptop.svg'); ?>
 			</div>
 
 			<div class="content-column">

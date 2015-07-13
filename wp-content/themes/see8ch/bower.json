@@ -1,0 +1,18 @@
+{
+  "name": "<%= pkg.name %>",
+  "version": "<%= pkg.version %>",
+  "homepage": "<%= pkg.url %>",
+  "authors": [
+    "<%= pkg.author %>"
+  ],
+  "license": "<%= pkg.copyright %>",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "assets/vendor"
+  ],
+  "dependencies": {
+    "modernizr": "2.8.2"
+  }
+}

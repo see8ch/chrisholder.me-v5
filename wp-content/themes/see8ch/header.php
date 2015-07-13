@@ -30,7 +30,7 @@
 			<div class="site-branding">
 				<h3 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h3>
 				<h5 class="site-description"><?php bloginfo( 'description' ); ?></h5>
-				<?php get_template_part('img/brand/logo', 'header.svg'); ?>
+				<?php get_template_part('assets/img/brand/logo', 'header.svg'); ?>
 			</div><!-- .site-branding -->
 
 			<nav id="site-navigation" class="main-navigation" role="navigation">

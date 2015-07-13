@@ -6,79 +6,85 @@
 
 'use strict';
 
-
-/**
- * Grunt module
- */
+// Grunt Module
 module.exports = function (grunt) {
 
-  /**
-   * Dynamically load npm tasks
-   */
+  // Dynamically load npm tasks
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
-  /**
-   * Grunt config
-   */
+  // Show elapsed time
+  require('time-grunt')(grunt);
+
+
+  // Grunt config
   grunt.initConfig({
 
     pkg: grunt.file.readJSON('package.json'),
 
-    /**
-     * Set project info
-     */
+
+    // Project Info
     project: {
-      src: 'src',
-      assets: '<%= project %>',
-      css: [
-        '<%= project.src %>/sass/style.scss'
+      assets: 'assets',
+      css : 'style.css',
+      sass: '<%= project.assets %>/sass/style.scss',
+      jsmain : '<%= project.assets %>/js/_main.js',
+      jsplugins : '<%= project.assets %>/js/plugins/*.js',
+      jsvendor: '<%= project.assets %>/js/vendor/*.js',
+      jsconcatSource: [
+        '<%= project.jsplugins %>',
+        '<%= project.jsmain %>'
       ],
-      js: [
-        '<%= project.src %>/js/_plugins/*.js',
-        '<%= project.src %>/js/*.js'
-      ]
+      jsconcatTarget : '<%= project.assets %>/js/scripts.js',
+      jsuglifySource: [
+        '<%= project.jsvendor %>',
+        '<%= project.jsconcatTarget %>'
+      ],
+      jsuglifyTarget : '<%= project.assets %>/js/scripts.min.js',
+      bowerPath : 'bower_components',
+      bowerscriptsSource : [
+        '<%= project.bowerPath %>/modernizr/modernizr.js',
+        '<%= project.bowerPath %>/jquery/dist/jquery.js'
+      ],
+      bowerscriptsTarget : '<%= project.assets %>/js/vendor/bower.js',
     },
 
-    /**
-     * Project banner
-     * Dynamically appended to CSS/JS files
-     * Inherits text from package.json
-     */
+
+
+    // Project Banner
+    // Dynamically appended to CSS/JS files (Inherits text from package.json)
     tag: {
       banner: '/*\n' +
-              ' Theme Name: <%= pkg.name %>\n' +
+              ' Theme Name: <%= pkg.themename %>\n' +
               ' Theme URI: <%= pkg.url %>\n' +
               ' Author: <%= pkg.author %>\n' +
-//              ' Author URI: <%= pkg.author-email %>\n' +
-              ' Descriptoin: <%= pkg.title %>\n' +
+              ' Description: <%= pkg.description %>\n' +
               ' Version: <%= pkg.version %>\n' +
-//              ' Copyright <%= pkg.copyright %>\n' +
+              ' Copyright <%= pkg.copyright %>\n' +
               ' Text Domain: <%= pkg.name %>\n' +
               ' */\n'
     },
 
 
-    /**
-     * JSHint
-     * https://github.com/gruntjs/grunt-contrib-jshint
-     * Manage the options inside .jshintrc file
-     */
+    // JSHint (https://github.com/gruntjs/grunt-contrib-jshint)
+    // Manage the options inside .jshintrc file
     jshint: {
-      files: ['src/js/*.js'],
+      files: ['<%= project.jsmain %>'],
       options: {
-        // jshintrc: '.jshintrc'
+        jshintrc: '.jshintrc'
       }
     },
 
-    /**
-     * Concatenate JavaScript files
-     * https://github.com/gruntjs/grunt-contrib-concat
-     * Imports all .js files and appends project banner
-     */
+    // Concatenate JavaScript files (https://github.com/gruntjs/grunt-contrib-concat)
+    // Imports all .js files and appends project banner
     concat: {
       dev: {
         files: {
-          'js/scripts.min.js': '<%= project.js %>'
+          '<%= project.jsconcatTarget %>' : '<%= project.jsconcatSource %>'
+        }
+      },
+      bowerScripts: {
+        files: {
+          '<%= project.bowerscriptsTarget %>' : '<%= project.bowerscriptsSource %>'
         }
       },
       options: {
@@ -88,27 +94,21 @@ module.exports = function (grunt) {
       }
     },
 
-    /**
-     * Uglify (minify) JavaScript files
-     * https://github.com/gruntjs/grunt-contrib-uglify
-     * Compresses and minifies all JavaScript files into one
-     */
+    // Uglify JavaScript files (https://github.com/gruntjs/grunt-contrib-uglify)
+    // Compresses and minifies all JavaScript files into one
     uglify: {
       options: {
         banner: "<%= tag.banner %>"
       },
       dist: {
         files: {
-          'js/scripts.min.js': '<%= project.js %>'
+          '<%= project.jsuglifyTarget %>' : '<%= project.jsuglifySource %>'
         }
       }
     },
 
-    /**
-     * Compile Sass/SCSS files
-     * https://github.com/gruntjs/grunt-contrib-sass
-     * Compiles all Sass/SCSS files and appends project banner
-     */
+    // Compile Sass/SCSS files (https://github.com/gruntjs/grunt-contrib-sass)
+    // Compiles all Sass/SCSS files and appends project banner
     sass: {
       dev: {
         options: {
@@ -116,7 +116,7 @@ module.exports = function (grunt) {
           banner: '<%= tag.banner %>'
         },
         files: {
-          'style.css': '<%= project.css %>'
+          '<%= project.css %>': '<%= project.sass %>'
         }
       },
       dist: {
@@ -125,15 +125,13 @@ module.exports = function (grunt) {
           banner: '<%= tag.banner %>'
         },
         files: {
-          'style.css': '<%= project.css %>'
+          '<%= project.css %>': '<%= project.sass %>'
         }
       }
     },
 
-    /**
-     * Autoprefixer
-     * https://github.com/nDmitry/grunt-autoprefixer
-     */
+
+    // Autoprefixer (https://github.com/nDmitry/grunt-autoprefixer)
     autoprefixer: {
         options: {},
         global: {
@@ -142,14 +140,12 @@ module.exports = function (grunt) {
                 // browser-specific info: https://github.com/ai/autoprefixer#browsers
                 browsers: ['> 1%', 'last 2 versions', 'ff 17', 'opera 12.1', 'ie 8', 'ie 9']
             },
-            src: 'style.css'
+            src: '<%= project.css %>'
         },
     },
 
-    /**
-     * Grunt failure notifications
-     * https://github.com/dylang/grunt-notify
-     */
+
+    // Grunt failure notifications (https://github.com/dylang/grunt-notify)
     notify_hooks: {
       options: {
         enabled: true,
@@ -159,45 +155,44 @@ module.exports = function (grunt) {
     },
 
 
-    /**
-     * Runs tasks against changed watched files
-     * https://github.com/gruntjs/grunt-contrib-watch
-     * Watching development files and run concat/compile tasks
-     * Livereload the browser once complete
-     */
+    // Browser Sync (works with 'watch')
+    browserSync: {
+        dev: {
+            bsFiles: {
+                src : '<%= project.css %>'
+            },
+            options: {
+                proxy: "<%= pkg.localhost %>",
+                watchTask: true
+            }
+        }
+    },
+
+    // Runs tasks against changed watched files (https://github.com/gruntjs/grunt-contrib-watch)
+    // Watching development files and run concat/compile tasks
     watch: {
       concat: {
-        files: '<%= project.src %>/js/{,*/}*.js',
-        tasks: ['concat:dev', 'jshint']
+        files: [
+          '<%= project.jsmain %>',
+          '<%= project.jsplugins %>',
+          '<%= project.bowerPath %>'
+        ],
+        tasks: ['jshint', 'concat:dev', 'concat:bowerScripts', 'uglify']
       },
       sass: {
-        files: '<%= project.src %>/sass/{,*/}*.{scss,sass}',
+        files: '<%= project.assets %>/sass/{,*/}*.{scss,sass}',
         tasks: ['sass:dev', 'autoprefixer']
-      },
-      livereload: {
-        options: {
-          livereload: true,
-          spawn: false,
-        },
-        files: [
-          '{,*/}*.html',
-          '{,*/}*.php',
-          '*.css',
-          '/js/{,*/}*.js',
-          '/images{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
-        ]
       }
     }
   });
 
-  /**
-   * Default task
-   * Run `grunt` on the command line
-   */
+  // Default Grunt Task
   grunt.registerTask('default', [
     'sass:dev',
-    'jshint',
     'concat:dev',
+    'concat:bowerScripts',
+    'uglify',
+    'browserSync:dev',
     'watch'
   ]);
 };
